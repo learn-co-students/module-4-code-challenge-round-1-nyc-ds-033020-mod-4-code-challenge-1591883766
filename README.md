@@ -1,22 +1,327 @@
 
-<h1 style="text-align:center">Module 6 Assessment</h1>
+# Module 4 Code Challenge
 
-Welcome to your Mod 6 Assessment. You will be tested for your understanding of concepts and ability to programmatically solve problems that have been covered in class and in the curriculum. Topics in this assessment include graph theory, natural language processing, and neural networks. 
+This code challenge is designed to test your understanding of the Module 4 material. It covers:
 
-The goal here is to demonstrate your knowledge. Showing that you know things about certain concepts is more important than getting the best model.
-
-Use any libraries you want to solve the problems in the assessment. 
-
-You will have up to 90 minutes to complete this assessment. 
-
-The sections of the assessment are:
-
+* Clustering
+* Time Series
 * Natural Language Processing
-* Network Analysis
-* Perceptrons and Multi-Layer Perceptrons
-* Regularization and Optimization of Neural Networks
+* Neural Networks
 
-## Natural Language Processing
+_Read the instructions carefully._ You will be asked both to write code and respond to a few short answer questions.
+
+The goal here is to demonstrate your knowledge. Showing that you know things about certain concepts is more important than getting the best model. You can use any libraries you want to solve the problems in the assessment. 
+
+You will have up to 90 minutes to complete this assessments
+### Note on the short answer questions
+
+For the short answer questions, _please use your own words._ The expectation is that you have **not** copied and pasted from an external source, even if you consult another source to help craft your response. While the short answer questions are not necessarily being assessed on grammatical correctness or sentence structure, you should do your best to communicate yourself clearly.
+
+## Part 1: Clustering [Suggested Time: 25 min]
+
+### Clustering Algorithms: k-means and hierarchical agglomerative clustering
+
+#### 1.1) Using the gif below for reference, describe the steps of the k-means clustering algorithm.
+* If the gif doesn't run, you may access it via [this link](images/centroid.gif).
+
+<img src='images/centroid.gif'>
+
+
+```python
+# Your answer here
+```
+
+#### 1.2) In a similar way, describe the process behind Hierarchical Agglomerative Clustering.
+
+
+```python
+# Your answer here
+```
+
+### k-means Clustering
+
+For this question, you will apply k-means clustering to your now friend, the wine dataset. 
+
+You will use scikit-learn to fit k-means clustering models, and you will determine the optimal number of clusters to use by looking at silhouette scores. 
+
+We load the wine dataset for you in the cell below. 
+
+
+```python
+from sklearn.datasets import load_wine
+
+X, y = load_wine(return_X_y=True)
+wine = load_wine()
+X = pd.DataFrame(X, columns = wine.feature_names)
+```
+
+**1.3) Write a function called `get_labels` that will find `k` clusters in a dataset of features `X`, and return the labels for each row of `X`.**
+
+_Hint: Within the function, you'll need to:_
+* instantiate a k-means clustering model (use `random_state = 1` for reproducibility),
+* fit the model to the data, and
+* return the labels for each point.
+
+
+```python
+# Replace None and pass with appropriate code
+def get_labels(k, X):
+    
+    # Instantiate a k-means clustering model with random_state=1 and n_clusters=k
+    kmeans = None
+    
+    # Fit the model to the data
+    None
+    
+    # return the predicted labels for each row in the data
+    pass 
+```
+
+**1.4) Fit the k-means algorithm to the wine data for k values in the range 2 to 9 using the function you've written above. Obtain the silhouette scores for each trained k-means clustering model, and place the values in a list called `silhouette_scores`.** 
+
+We have provided you with some starter code in the cell below.
+
+_Hints: What imports do you need? Do you need to pre-process the data in any way before fitting the k-means clustering algorithm?_ 
+
+
+```python
+# Your code here
+
+silhouette_scores= []
+
+for k in range(2, 10):
+    labels = None 
+    
+    score = silhouette_score(None, None, metric='euclidean')
+    
+    silhouette_scores.append(score)
+```
+
+Run the cell below to plot the silhouette scores obtained for each different value of k against k, the number of clusters we asked the algorithm to find. 
+
+
+```python
+plt.plot(range(2, 10), silhouette_scores, marker='o')
+plt.title('Silhouette scores vs number of clusters')
+plt.xlabel('k (number of clusters)')
+plt.ylabel('silhouette score')
+```
+
+**1.5) Which value of k would you choose based on the plot of silhouette scores? How does this number compare to the number of classes in the wine dataset?**
+
+Hint: this number should be <= 5.  If it's not, check your answer in the previous section.
+
+
+```python
+# Your answer here 
+```
+
+## Part 2: Time Series [Suggested Time: 15 minutes]
+
+<!---Create stock_df and save as .pkl
+stocks_df = pd.read_csv("raw_data/all_stocks_5yr.csv")
+stocks_df["clean_date"] = pd.to_datetime(stocks_df["date"], format="%Y-%m-%d")
+stocks_df.drop(["date", "clean_date", "volume", "Name"], axis=1, inplace=True)
+stocks_df.rename(columns={"string_date": "date"}, inplace=True)
+pickle.dump(stocks_df, open("write_data/all_stocks_5yr.pkl", "wb"))
+--->
+
+
+```python
+import pickle
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+from pandas.plotting import register_matplotlib_converters
+register_matplotlib_converters()
+```
+
+
+```python
+stocks_df = pickle.load(open("write_data/all_stocks_5yr.pkl", "rb"))
+stocks_df.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>open</th>
+      <th>high</th>
+      <th>low</th>
+      <th>close</th>
+      <th>date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>15.07</td>
+      <td>15.12</td>
+      <td>14.63</td>
+      <td>14.75</td>
+      <td>February 08, 2013</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>14.89</td>
+      <td>15.01</td>
+      <td>14.26</td>
+      <td>14.46</td>
+      <td>February 11, 2013</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>14.45</td>
+      <td>14.51</td>
+      <td>14.10</td>
+      <td>14.27</td>
+      <td>February 12, 2013</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>14.30</td>
+      <td>14.94</td>
+      <td>14.25</td>
+      <td>14.66</td>
+      <td>February 13, 2013</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>14.94</td>
+      <td>14.96</td>
+      <td>13.16</td>
+      <td>13.99</td>
+      <td>February 14, 2013</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+### 2.1) Transform the `date` feature so that it becomes a `datetime` object that contains the following format: YYYY-MM-DD and set `date` to be the index of `stocks_df`.
+
+
+```python
+# Your code here
+```
+
+### 2.2) Perform downsampling `stocks_df` that takes the mean of the `open`, `high`, `low`, and `close` features on a monthly basis. Store the results in `stocks_monthly_df`.
+
+> Hint: `stocks_monthly_df` should have 61 rows and 4 columns after you perform downsampling.
+
+
+```python
+# Your code here
+```
+
+
+```python
+stocks_monthly_df.shape
+```
+
+### 2.3) Create a line graph that visualizes the monthly open stock prices from `stocks_monthly_df` for the purposes of identifying if average monthly open stock price is stationary or not using the rolling mean and rolling standard deviation.
+
+> Hint: 
+> * store your sliced version of `stocks_monthly_df` in a new DataFrame called `open_monthly_df`;
+> * use a window size of 3 to represent one quarter of time in a year
+
+
+```python
+# Your code here
+
+open_monthly_df = None
+
+rolmean = None
+rolstd = None
+
+# note: do not rename the variables otherwise the plot code will not work
+```
+
+
+```python
+fig, ax = plt.subplots(figsize=(13, 10))
+ax.plot(open_monthly_df, color="blue",label="Average monthly opening stock price")
+ax.plot(rolmean, color="red", label="Rolling quarterly mean")
+ax.plot(rolstd, color="black", label="Rolling quarterly std. deviation")
+ax.set_ylim(0, 120)
+ax.legend()
+fig.suptitle("Average monthly open stock prices, Feb. 2013 to Feb. 2018")
+fig.tight_layout()
+```
+
+Based on your visual inspection of the graph, is the monthly open stock price stationary?
+
+
+```python
+# Your written answer here
+```
+
+### 2.4) Use the Dickey-Fuller Test to identify if `open_monthly_df` is stationary
+
+
+```python
+# Your code here
+```
+
+Does this confirm your answer from Question 3? Explain why the time series is stationary or not based on the output from the Dickey-Fuller Test.
+
+
+```python
+# Your answer here
+```
+
+### 2.5) Looking at the decomposition of the time series in `open_monthly_df`, it looks like the peaks are the same value. To confirm or deny this, create a function that returns a dictionary where each key is year and each value is the maximum value from the `seasonal` object for each year.
+
+
+```python
+from statsmodels.tsa.seasonal import seasonal_decompose
+decomposition = seasonal_decompose(np.log(open_monthly_df))
+
+# Gather the trend, seasonality and noise of decomposed object
+seasonal = decomposition.seasonal
+
+# Plot gathered statistics
+plt.figure(figsize=(13, 10))
+plt.plot(seasonal,label='Seasonality', color="blue")
+plt.title("Seasonality of average monthly open stock prices, Feb. 2013 to Feb. 2018")
+plt.ylabel("Average monthly open stock prices")
+plt.tight_layout()
+plt.show()
+```
+
+
+```python
+def calc_yearly_max(seasonal_series):
+    """Returns the max seasonal value for each year"""
+    # Your code here
+```
+
+
+```python
+calc_yearly_max(seasonal)
+```
+
+## Part 3: Natural Language Processing [Suggested Time: 20 minutes]
 
 In this exercise we will attempt to classify text messages as "SPAM" or "HAM" using TF-IDF Vectorization. Once we successfully classify our texts we will examine our results to see which words are most important to each class of text messages. 
 
@@ -245,189 +550,7 @@ get_idf('ham', df_messages, stopwords_list)
 # Your answer here
 ```
 
-## Network Analysis
-
-For these next questions, you'll be using a graph dataset of facebook users and networkx. In the next cell, we're going to read in the dataset.
-
-
-```python
-import networkx as nx
-G = nx.read_edgelist('./data/0.edges')
-```
-
-###### 1) Create a function `find_centrality` that returns a dictionary with the user with the highest betweenness centrality and the user with the highest degree centrality. It should return a dictionary that looks like:
-
-
-{'bc' : |user|, 'dc' : |user|}
-
-
-```python
-def find_centrality(graph):
-    """
-    Calculates the most central nodes on a graph
-    
-    Parameters
-    ----------
-    graph: networkx Graph object
-        Graph object to be analyzed
-    Returns
-    --------
-    centrality_dict : dict
-        A dictionary with the highest ranked user based off degree centrality and betweenness centrality 
-    """
-    pass
-```
-
-#### 2) How does each of these people wield influence on the network? Imagine a message had to get to people from different communities. Who would be the best user to deliver the message to ensure that people from opposite communities receive the message?
-
-// answer here //
-
-
-```python
-# Your answer here
-```
-
-#### 3) A marketing group is looking to target different communities with advertisements based off of their assumed mutual interests. 
-
-#### Use the `k_cliques_communities` method to calculate the number of cliques formed with k users in a function `find_k_communities`. Calculate how many communities there are if the minimum size of a clique is 5.
-
-
-
-```python
-def find_k_communities(graph,k):
-    """
-    Parameters
-    ----------
-    graph: networkx Graph object
-        
-    k : int
-        k-number of connections required for a clique
-    
-    Returns
-    -------
-    num_communities: int
-        The number of communities present in the graph
-    """
-    pass
-```
-
-## Perceptrons and Multi Layer Perceptrons
-
-In the first neural network portion of this assessment, you are going to start off by answering questions related to the mechanics of basic neural networks. After, you will look at various ways of tuning neural networks by way of regularization and optimization. To start off with, we are going to import all the libraries that you might need for the questions in this section.
-
-
-```python
-import numpy as np
-import pandas as pd
-from matplotlib import pyplot
-from sklearn.datasets import make_gaussian_quantiles, make_circles
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
-from keras import Sequential, regularizers
-from keras.layers import Dense
-from keras.initializers import RandomNormal
-```
-
-<center><b>The Sigmoid Function</b></center>
-$$ \sigma(z) = \frac{1}{1+e^{-z}}$$
-
-<center><b>A Diagram of Simple Perceptron</b></center>
-
-<img src='images/perceptron.png'/>
-
-##### 1) What are the inputs and outputs of a perceptron?
-
-// answer here //
-
-
-```python
-# Your answer here
-```
-
-##### 2) We've completed the sigmoid function for you. Let's create a function that takes in an array of inputs (x) along with predefined weights (w), a bias (b) and returns the output of a perceptron. 
-
-
-```python
-def sigmoid(input_):
-    """
-    Transforms an input using the sigmoid function given above
-    
-    Parameters
-    ----------
-    input_: input to be transformed
-    
-    Returns
-    --------
-    output : float
-        result of the application of the sigmoid function 
-    """
-    
-    return 1/(1+np.exp(-1*input_))
-```
-
-
-```python
-def perceptron_output(x,w,b):
-    """
-    Caluclates the perceptron output. Should use sigmoid as a helper function.
-    
-    Parameters
-    ----------
-    x : np.array
-        perceptron inputs
-    w : np.array
-        perceptron input weights
-    b : float
-        bias term
-    
-    Returns
-    --------
-    y : float
-        final output of the perceptron
-    """
-    
-    pass
-```
-
-
-```python
-x = [1, .19, 1]
-w = [.2, .9, .75]
-b = 0.5
-```
-
-
-```python
-perceptron_output(x,w,b)
-```
-
-<center><b>Diagram of a Multi Layer Perceptron</b></center>
-
-<img src='images/Deeper_network_day2.png'/>
-
-##### 3) Describe the process of forward propagation in neural networks
-
-
-```python
-# Your answer here
-```
-
-##### 4) How does what happens in forward-propagation change what happens in back-propagation? Be as specific as possible.
-
-
-```python
-# Your answer here
-```
-
-##### 5) Imagine you are trying classifying audio files into five different classes of sounds. What should your activation function be in the output layer and why? 
-
-
-```python
-# Your answer here
-```
-
-## Regularization and Optimization of Neural Networks
+## Part 4: Regularization and Optimization of Neural Networks [Suggested Time: 20 minutes]
 
 Now you're going to train full neural networks on a _small_ set of data. It is a binary classification problem in which you need to identify whether or not a dot will belong to the teal or orange class.
 

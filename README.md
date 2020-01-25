@@ -754,7 +754,7 @@ Written answer here
 """
 ```
 
-### 4.2) How might L1  and dropout regularization change a neural network's architecture?
+### 4.3) How might L1  and dropout regularization change a neural network's architecture?
 
 
 ```python

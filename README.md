@@ -83,7 +83,7 @@ def get_labels(k, X):
     pass 
 ```
 
-**1.4) Fit the k-means algorithm to the wine data for k values in the range 2 to 9 using the function you've written above. Obtain the silhouette scores for each trained k-means clustering model, and place the values in a list called `silhouette_scores`.** 
+### 1.4) Fit the k-means algorithm to the wine data for k values in the range 2 to 9 using the function you've written above. Obtain the silhouette scores for each trained k-means clustering model, and place the values in a list called `silhouette_scores`.
 
 We have provided you with some starter code in the cell below.
 
@@ -113,7 +113,7 @@ plt.xlabel('k (number of clusters)')
 plt.ylabel('silhouette score')
 ```
 
-**1.5) Which value of k would you choose based on the plot of silhouette scores? How does this number compare to the number of classes in the wine dataset?**
+### 1.5) Which value of k would you choose based on the plot of silhouette scores? How does this number compare to the number of classes in the wine dataset?**
 
 Hint: this number should be <= 5.  If it's not, check your answer in the previous section.
 

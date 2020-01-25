@@ -19,28 +19,34 @@ For the short answer questions, _please use your own words._ The expectation is 
 
 ## Part 1: Clustering [Suggested Time: 25 min]
 
-### Clustering Algorithms: k-means and hierarchical agglomerative clustering
+This first part of the code challenge is meant to test your k-means and hierarchical agglomerative clustering knowledge.
 
-#### 1.1) Using the gif below for reference, describe the steps of the k-means clustering algorithm.
+### 1.1) Using the gif below for reference, describe the steps of the k-means clustering algorithm.
 * If the gif doesn't run, you may access it via [this link](images/centroid.gif).
 
 <img src='images/centroid.gif'>
 
 
 ```python
-# Your answer here
+"""
+
+Written answer here
+
+"""
 ```
 
-#### 1.2) In a similar way, describe the process behind Hierarchical Agglomerative Clustering.
+### 1.2) In a similar way, describe the process behind Hierarchical Agglomerative Clustering.
 
 
 ```python
-# Your answer here
+"""
+
+Written answer here
+
+"""
 ```
 
-### k-means Clustering
-
-For this question, you will apply k-means clustering to your now friend, the wine dataset. 
+Next, you will apply k-means clustering to your now friend, the wine dataset. 
 
 You will use scikit-learn to fit k-means clustering models, and you will determine the optimal number of clusters to use by looking at silhouette scores. 
 
@@ -55,7 +61,7 @@ wine = load_wine()
 X = pd.DataFrame(X, columns = wine.feature_names)
 ```
 
-**1.3) Write a function called `get_labels` that will find `k` clusters in a dataset of features `X`, and return the labels for each row of `X`.**
+### 1.3) Write a function called `get_labels` that will find `k` clusters in a dataset of features `X`, and return the labels for each row of `X`
 
 _Hint: Within the function, you'll need to:_
 * instantiate a k-means clustering model (use `random_state = 1` for reproducibility),
@@ -85,7 +91,7 @@ _Hints: What imports do you need? Do you need to pre-process the data in any way
 
 
 ```python
-# Your code here
+# Code here
 
 silhouette_scores= []
 
@@ -113,7 +119,11 @@ Hint: this number should be <= 5.  If it's not, check your answer in the previou
 
 
 ```python
-# Your answer here 
+"""
+
+Written answer here
+
+"""
 ```
 
 ## Part 2: Time Series [Suggested Time: 15 minutes]
@@ -125,6 +135,8 @@ stocks_df.drop(["date", "clean_date", "volume", "Name"], axis=1, inplace=True)
 stocks_df.rename(columns={"string_date": "date"}, inplace=True)
 pickle.dump(stocks_df, open("write_data/all_stocks_5yr.pkl", "wb"))
 --->
+
+In the second part of the assessment, you'll be looking at OHLC (Open, High, Low, Close) daily stock data.
 
 
 ```python
@@ -222,7 +234,7 @@ stocks_df.head()
 
 
 ```python
-# Your code here
+# Code here
 ```
 
 ### 2.2) Perform downsampling `stocks_df` that takes the mean of the `open`, `high`, `low`, and `close` features on a monthly basis. Store the results in `stocks_monthly_df`.
@@ -231,7 +243,7 @@ stocks_df.head()
 
 
 ```python
-# Your code here
+# Code here
 ```
 
 
@@ -247,7 +259,7 @@ stocks_monthly_df.shape
 
 
 ```python
-# Your code here
+# Code here
 
 open_monthly_df = None
 
@@ -273,21 +285,29 @@ Based on your visual inspection of the graph, is the monthly open stock price st
 
 
 ```python
-# Your written answer here
+"""
+
+Written answer here
+
+"""
 ```
 
 ### 2.4) Use the Dickey-Fuller Test to identify if `open_monthly_df` is stationary
 
 
 ```python
-# Your code here
+# Code here
 ```
 
 Does this confirm your answer from Question 3? Explain why the time series is stationary or not based on the output from the Dickey-Fuller Test.
 
 
 ```python
-# Your answer here
+"""
+
+Written answer here
+
+"""
 ```
 
 ### 2.5) Looking at the decomposition of the time series in `open_monthly_df`, it looks like the peaks are the same value. To confirm or deny this, create a function that returns a dictionary where each key is year and each value is the maximum value from the `seasonal` object for each year.
@@ -311,9 +331,11 @@ plt.show()
 
 
 ```python
+# Replace "pass" with appropriate code
+
 def calc_yearly_max(seasonal_series):
     """Returns the max seasonal value for each year"""
-    # Your code here
+    pass
 ```
 
 
@@ -345,28 +367,26 @@ from nltk import word_tokenize
 
 
 ```python
-#read in data
+# read in data
 df_messages = pd.read_csv('data/spam.csv', usecols=[0,1])
 ```
 
 
 ```python
-#convert string labels to 1 or 0 
+# convert string labels to 1 or 0 
 le = LabelEncoder()
 df_messages['target'] = le.fit_transform(df_messages['v1'])
 ```
 
 
 ```python
-#examine or data
+# examine or data
 df_messages.head()
 ```
 
-### TF-IDF
-
 
 ```python
-#separate features and labels 
+# separate features and labels 
 X = df_messages['v2']
 y = df_messages['target']
 
@@ -374,16 +394,16 @@ y = df_messages['target']
 
 
 ```python
-#generate a list of stopwords 
+# generate a list of stopwords 
 stopwords_list = stopwords.words('english') + list(string.punctuation)
 
 ```
 
-<b>1) Let's create a function that takes in our various texts along with their respective labels and uses TF-IDF to vectorize the texts.  Recall that TF-IDF helps us "vectorize" text (turn text into numbers) so we can do "math" with it.  It is used to reflect how relevant a term is in a given document in a numerical way. </b>
+### 3.1) Create a function that takes in our various texts along with their respective labels and uses TF-IDF to vectorize the texts.  Recall that TF-IDF helps us "vectorize" text (turn text into numbers) so we can do "math" with it.  It is used to reflect how relevant a term is in a given document in a numerical way. 
 
 
 ```python
-#generate tf-idf vectorization (use sklearn's TfidfVectorizer) for our data
+#generate tf-idf vectorization (use sklearn's TfidfVectorizer) for our data, replace "pass" below
 def tfidf(X, y,  stopwords_list): 
     '''
     Generate train and test TF-IDF vectorization for our data set
@@ -420,9 +440,7 @@ def tfidf(X, y,  stopwords_list):
 tf_idf_train, tf_idf_test, y_train, y_test, vecotorizer = tfidf(X, y, stopwords_list)
 ```
 
-### Classification
-
-<b>2) Now that we have a set of vectorized training data we can use this data to train a classifier to learn how to classify a specific text based on the vectorized version of the text. Below we have initialized a simple Naive Bayes Classifier and Random Forest Classifier. Complete the function below which will accept a classifier object, a vectorized training set, vectorized test set, and list of training labels and return a list of predictions for our training set and a separate list of predictions for our test set.</b> 
+### 3.2) Now that we have a set of vectorized training data we can use this data to train a _classifier_ to learn how to classify a specific text based on the vectorized version of the text. Below we have initialized a simple Naive Bayes Classifier and Random Forest Classifier. Complete the function below which will accept a classifier object, a vectorized training set, vectorized test set, and list of training labels and return a list of predictions for our training set and a separate list of predictions for our test set.
 
 
 ```python
@@ -432,7 +450,8 @@ rf_classifier = RandomForestClassifier(n_estimators=100)
 
 
 ```python
-#create a function that takes in a classifier and trains it on our tf-idf vectors and generates test and train predictiions
+# create a function that takes in a classifier and trains it on our tf-idf vectors 
+# and generates test and train predictions. Replace "pass" in the code below.
 def classify_text(classifier, tf_idf_train, tf_idf_test, y_train):
     '''
     Train a classifier to identify whether a message is spam or ham
@@ -464,7 +483,7 @@ def classify_text(classifier, tf_idf_train, tf_idf_test, y_train):
 
 
 ```python
-#generate predictions for Naive Bayes Classifier
+# generate predictions for Naive Bayes Classifier
 nb_train_preds, nb_test_preds = classify_text(nb_classifier,tf_idf_train, tf_idf_test, y_train)
 ```
 
@@ -488,10 +507,12 @@ print(accuracy_score(y_test, rf_test_preds))
 
 You can see both classifiers do a pretty good job classifying texts as either "SPAM" or "HAM". Let's figure out which words are the most important to each class of texts! Recall that Inverse Document Frequency can help us determine which words are most important in an entire corpus or group of documents. 
 
-<b>3) Create a function that calculates the IDF of each word in our collection of texts.</b>
+### 3.3) Create a function that calculates the IDF of each word in our collection of texts.
 
 
 ```python
+# Replace "pass" with the appropriate code
+
 def get_idf(class_, df, stopwords_list):
     '''
     Get ten words with lowest IDF values representing 10 most important
@@ -525,6 +546,7 @@ def get_idf(class_, df, stopwords_list):
         #loop over each word and if it is not in the stopwords_list add the word 
         #to class_dict with a value of 1. if it is already in the dictionary
         #increment it by 1
+        pass
         
     #take our dictionary and calculate the 
     #IDF (number of docs / number of docs containing each word) 
@@ -542,17 +564,32 @@ get_idf('spam', df_messages, stopwords_list)
 get_idf('ham', df_messages, stopwords_list)
 ```
 
-### Explain
-<b> 4) Imagine that the word "school" has the highest TF-IDF value in the second document of our test data. What does that tell us about the word school? </b>
+### 3.4) Imagine that the word "school" has the highest TF-IDF value in the second document of our test data. What does that tell us about the word school?
 
 
 ```python
-# Your answer here
+"""
+
+Written answer here
+
+"""
 ```
 
 ## Part 4: Regularization and Optimization of Neural Networks [Suggested Time: 20 minutes]
 
-Now you're going to train full neural networks on a _small_ set of data. It is a binary classification problem in which you need to identify whether or not a dot will belong to the teal or orange class.
+Now you're going to train full neural networks on a small set of data. It is a binary classification problem in which you need to identify whether or not a dot will belong to the teal or orange class. Let's first import some of the necessary libraries.
+
+
+```python
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot
+from sklearn.datasets import make_gaussian_quantiles, make_circles
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+from keras import Sequential, regularizers
+from keras.layers import Dense
+```
 
 
 ```python
@@ -569,11 +606,15 @@ for key, group in grouped:
 pyplot.show()
 ```
 
+
+![png](index_files/index_65_0.png)
+
+
 In the two cells below, the set of data has been split into a training and testing set and then fit to a neural network with two hidden layers. Run the two cells below to see how well the model performs.
 
 
 ```python
-#train/test/split
+# train/test/split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 ```
 
@@ -629,7 +670,11 @@ predicted_vals_test = classifier.predict_classes(X_test)
 print(accuracy_score(y_test,predicted_vals_test))
 ```
 
-##### 1) Modify the code below to use L2 regularization
+    0.8126984126984127
+    0.6666666666666666
+
+
+### 4.1) Modify the code below to use L2 regularization
 
 
 The model appears to be overfitting. To deal with this overfitting, modify the code below to include L2 regularization in the model. 
@@ -690,20 +735,32 @@ Did the regularization you performed prevent overfitting?
 
 
 ```python
-# Your answer here
+"""
+
+Written answer here
+
+"""
 ```
 
-##### 2) Explain how regularization is related to the bias/variance tradeoff within Neural Networks and how it's related to the results you just achieved in the training and test accuracies of the previous models. What does regularization change in the training process (be specific to what is being regularized and how it is regularizing)?
+### 4.2) Explain how regularization is related to the bias/variance tradeoff within Neural Networks and how it's related to the results you just achieved in the training and test accuracies of the previous models. What does regularization change in the training process (be specific to what is being regularized and how it is regularizing)?
 
 
 
 ```python
-# Your answer here
+"""
+
+Written answer here
+
+"""
 ```
 
-##### 3) How might L1  and dropout regularization change a neural network's architecture?
+### 4.2) How might L1  and dropout regularization change a neural network's architecture?
 
 
 ```python
-# Your answer here
+"""
+
+Written answer here
+
+"""
 ```

@@ -11,7 +11,7 @@ _Read the instructions carefully._ You will be asked both to write code and resp
 
 The goal here is to demonstrate your knowledge. Showing that you know things about certain concepts is more important than getting the best model. You can use any libraries you want to solve the problems in the assessment. 
 
-You will have up to 90 minutes to complete this assessments 
+You will have up to 60 minutes to complete this assessments 
 
 ### Note on the short answer questions
 

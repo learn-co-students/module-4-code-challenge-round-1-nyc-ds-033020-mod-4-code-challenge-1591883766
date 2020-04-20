@@ -22,9 +22,7 @@ For the short answer questions, _please use your own words._ The expectation is 
 
 ---
 
-In the first part of the code challenge, you'll apply the unsupervised learning technique of Principal Component Analysis to your now friend, the wine dataset. 
-
-You'll use the principal components of the dataset as features in a machine learning model. You'll use the extracted features to train a vanilla Random Forest Classifier, and compare model performance to a model trained without PCA-extracted features.
+In the first part of the code challenge, you'll apply the unsupervised learning technique of Principal Component Analysis to the wine dataset. 
 
 We load the wine dataset for you in the cell below. 
 
@@ -60,7 +58,7 @@ X_train_scaled.head()
 
 Call the PCA instance you'll create `wine_pca`. Set `n_components=0.9` and make sure to use `random_state = 42`.
 
-_Hint: Make sure you are using the **preprocessed data!**_
+_Make sure you are using the **preprocessed data!**_
 
 
 ```python
@@ -76,37 +74,6 @@ _Hint: Look at the list of attributes of trained `PCA` objects in the [scikit-le
 # Your code here
 ```
 
-Now we will use the fitted PCA object to transform the training data:
-
-
-```python
-# Run this cell without changes
-
-# Transform the training features into an array of reduced dimensionality
-X_train_pca = wine_pca.transform(X_train_scaled)
-
-# Create a dataframe from this array of transformed features 
-X_train_pca = pd.DataFrame(X_train_pca)
-
-# Inspect the first five rows of the transformed features dataset 
-X_train_pca.head()
-```
-
-Then, we fit two `RandomForestClassifier` models, `rfc_without_pca` and `rfc_with_pca` with `X_train` and `X_train_pca` respectively
-
-
-```python
-# Run this cell without changes
-
-from sklearn.ensemble import RandomForestClassifier
-
-rfc_without_pca = RandomForestClassifier(n_estimators=10, random_state=42)
-rfc_without_pca.fit(X_train, y_train)
-
-rfc_with_pca = RandomForestClassifier(n_estimators=10, random_state=42)
-rfc_with_pca.fit(X_train_pca, y_train)
-```
-
 ### 1.3) Is PCA more useful or less useful when you have high multicollinearity among your features? Explain why.
 
 
@@ -115,7 +82,7 @@ rfc_with_pca.fit(X_train_pca, y_train)
 
 Your written answer here
 
-""";
+"""
 ```
 
 --- 
@@ -124,7 +91,7 @@ Your written answer here
 
 ---
 
-This second part of the code challenge is meant to test your k-means and hierarchical agglomerative clustering knowledge.
+This second part of the code challenge is meant to test your clustering knowledge.
 
 * If the gif doesn't run, you may access it via [this link](images/centroid.gif).
 
@@ -138,7 +105,7 @@ This second part of the code challenge is meant to test your k-means and hierarc
 
 Your written answer here
 
-""";
+"""
 ```
 
 Now let's use the wine dataset again, this time for clustering.
@@ -160,6 +127,22 @@ _Hint: Within the function, you'll need to:_
 None
 
 def get_labels(k, X):
+    """ 
+    Finds the labels from a k-means clustering model 
+    
+    Parameters: 
+    -----------
+    k: float object
+        number of clusters to use in the k-means clustering model
+    X: Pandas DataFrame or array-like object
+        Data to cluster
+    
+    Returns: 
+    --------
+    labels: array-like object
+        Labels attribute from the k-means model
+    
+    """
     
     # Instantiate a k-means clustering model with random_state=1 and n_clusters=k
     kmeans = None
@@ -212,7 +195,7 @@ plt.ylabel('silhouette score');
 
 ### 2.3) Which value of $k$ would you choose based on the above plot of silhouette scores? How does this number compare to the number of classes in the [wine dataset](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html)?
 
-Hint: this number should be <= 5.  If it's not, check your answer in the previous section.
+Hint: this number should be <= 5. If it's not, check the function written for Question 2.2.
 
 
 ```python
@@ -220,7 +203,7 @@ Hint: this number should be <= 5.  If it's not, check your answer in the previou
 
 Your written answer here
 
-""";
+"""
 ```
 
 ---
@@ -308,7 +291,7 @@ def tfidf(X, y, stopwords_list):
     y_test : array-like object
         labels for testing data
     vectorizer : vectorizer object
-        fit TF-IDF vecotrizer object
+        fit TF-IDF vectorizer object
 
     """
     X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
@@ -322,7 +305,11 @@ def tfidf(X, y, stopwords_list):
 tf_idf_train, tf_idf_test, y_train, y_test, vectorizer = tfidf(X, y, stopwords_list)
 ```
 
-### 3.2) Now that we have a set of vectorized training data we can use this data to train a _classifier_ to learn how to classify a specific text based on the vectorized version of the text. Below we have initialized a simple Naive Bayes Classifier and Random Forest Classifier. Complete the function below which will accept a classifier object, a vectorized training set, vectorized test set, and a list of training labels to return a list of predictions for our training set and a separate list of predictions for our test set.
+### 3.2) Complete the function below to return a list of predictions for our training set and a separate list of predictions for our test set.
+
+Now that we have a set of vectorized training data we can use this data to train a _classifier_ to learn how to classify a specific text based on the vectorized version of the text. Below we have initialized a simple Naive Bayes Classifier and Random Forest Classifier. 
+
+The function should accept a classifier object, a vectorized training set, vectorized test set, and a list of training labels to return separate lists of predictions for the training and the test sets.
 
 
 ```python
@@ -392,7 +379,9 @@ print(confusion_matrix(y_test, rf_test_preds))
 print(accuracy_score(y_test, rf_test_preds))
 ```
 
-You can see both classifiers do a pretty good job classifying texts as either "SPAM" or "HAM".  Let's do some more EDA to understand the data.
+You can see both classifiers do a pretty good job classifying texts as either "SPAM" or "HAM". 
+
+### 3.3) Based on the code below, the word "genuine" has the highest TF-IDF value in the second document of our test data. What does that tell us about the word "genuine"?
 
 
 ```python
@@ -409,15 +398,13 @@ second_doc.idxmax(axis=1)
 second_doc['genuine']
 ```
 
-### 3.3) Based on the code above, the word "genuine" has the highest TF-IDF value in the second document of our test data. What does that tell us about the word "genuine"?
-
 
 ```python
 """
 
 Your written answer here
 
-""";
+"""
 ```
 
 ---
@@ -450,7 +437,11 @@ stocks_df = pickle.load(open('write_data/all_stocks_5yr.pkl', 'rb'))
 stocks_df.head()
 ```
 
-### 4.1) Transform the `date` feature so that it becomes a `datetime` object that contains the following format: YYYY-MM-DD and set `date` to be the index of `stocks_df`.
+### 4.1) Transform the `date` feature so that it becomes a `datetime` object, and set `date` to be the index of `stocks_df`.
+
+The format of the `date` feature is `'%B %d, %Y'` . Use this when converting the `date` feature to a `datetime` object in order for the code to run faster.
+
+Be sure that the `date` index of `stocks_df` is in the format: YYYY-MM-DD (should do so automatically).
 
 
 ```python
@@ -459,7 +450,7 @@ stocks_df.head()
 
 ### 4.2) Downsample `stocks_df` using the mean of the `open`, `high`, `low`, and `close` features on a monthly basis. Store the results in `stocks_monthly_df`.
 
-> Hint: `stocks_monthly_df` should have 61 rows and 4 columns after you perform downsampling.
+Hint: `stocks_monthly_df` should have 61 rows and 4 columns after you perform downsampling.
 
 
 ```python
@@ -472,17 +463,19 @@ stocks_df.head()
 stocks_monthly_df.shape
 ```
 
-### 4.3) Create a line graph that visualizes the monthly open stock prices from `stocks_monthly_df` for the purposes of identifying if average monthly open stock price is stationary or not using the rolling mean and rolling standard deviation.
+### 4.3) Create a line graph that visualizes the monthly open stock prices from `stocks_monthly_df`.
 
-> Hint: 
-> * store your sliced version of `stocks_monthly_df` in a new DataFrame called `open_monthly_df`;
-> * use a window size of 3 to represent one quarter of time in a year
+This is for the purposes of identifying if average monthly open stock price is stationary or not, using the rolling mean and rolling standard deviation.
+
+Store a sliced version of `stocks_monthly_df` which grabs the `open` column in a new object called `open_monthly_series`.
+
+Hint: use a window size of 3 to represent one quarter of a year
 
 
 ```python
 # Replace None with appropriate code
 
-open_monthly_df = None
+open_monthly_series = None
 
 roll_mean = None
 roll_std = None
@@ -494,7 +487,7 @@ roll_std = None
 ```python
 # Run this cell without changes
 fig, ax = plt.subplots(figsize=(13, 10))
-ax.plot(open_monthly_df, color='blue',label='Average monthly opening stock price')
+ax.plot(open_monthly_series, color='blue',label='Average monthly opening stock price')
 ax.plot(roll_mean, color='red', label='Rolling quarterly mean')
 ax.plot(roll_std, color='black', label='Rolling quarterly std. deviation')
 ax.set_ylim(0, 120)
@@ -511,17 +504,19 @@ Based on your visual inspection of the above graph, is the monthly open stock pr
 
 Your written answer here
 
-""";
+"""
 ```
 
-### 4.4) Use the Dickey-Fuller test to identify if `open_monthly_df` is stationary. 
+### 4.4) Use the Dickey-Fuller test to identify if `open_monthly_series` is stationary. 
 
 
 ```python
+# Relevant import(s) here 
+
 # Your code here
 ```
 
-Does this confirm your answer from **4.3**? Explain why the time series is stationary or not based on the output from the Dickey-Fuller test.  What is the null hypothesis, and were you able to reject it?
+Does this confirm your answer from Question 4.3? Explain why the time series is stationary or not based on the output from the Dickey-Fuller test. What is the null hypothesis, and were you able to reject it?
 
 
 ```python
@@ -529,5 +524,5 @@ Does this confirm your answer from **4.3**? Explain why the time series is stati
 
 Your written answer here
 
-""";
+"""
 ```

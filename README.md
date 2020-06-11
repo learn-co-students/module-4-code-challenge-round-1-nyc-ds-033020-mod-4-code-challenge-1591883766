@@ -32,9 +32,13 @@ We load the wine dataset for you in the cell below.
 
 # Relevant imports
 import pandas as pd
+import warnings
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+
+# Supress warnings
+warnings.simplefilter("ignore")
 
 # Load data
 wine = load_wine()
@@ -113,6 +117,8 @@ Now let's use the wine dataset again, this time for clustering.
 You will use scikit-learn to fit k-means clustering models, and you will determine the optimal number of clusters to use by looking at silhouette scores. 
 
 ### 2.2) Write a function called `get_labels()` that will find `k` clusters in a dataset of features `X`, and return the labels for each row of `X`. 
+
+Review the doc-string in the function below to understand the requirements of this function.
 
 _Hint: Within the function, you'll need to:_
 * instantiate a k-means clustering model (use `random_state = 1` for reproducibility),
@@ -262,8 +268,9 @@ stopwords_list = stopwords.words('english') + list(string.punctuation)
 
 ### 3.1) Create a function that takes in our various texts along with their respective labels and uses TF-IDF to vectorize the texts.
 
- - Recall that TF-IDF helps us "vectorize" text (turn text into numbers) so we can do "math" with it.  It is used to quantify how relevant a term is in a given document.
- - **DO NOT** perform tokenization, removal of stop words, or TF-IDF vectorization "by hand".  Use `sklearn`'s `TfidfVectorizer`.
+- Review the doc-string in the function below to understand the requirements of this function.
+- Recall that TF-IDF helps us "vectorize" text (turn text into numbers) so we can do "math" with it.  It is used to quantify how relevant a term is in a given document.
+- **DO NOT** perform tokenization, removal of stop words, or TF-IDF vectorization "by hand".  Use `sklearn`'s `TfidfVectorizer`.
 
 
 ```python
@@ -310,7 +317,7 @@ tf_idf_train, tf_idf_test, y_train, y_test, vectorizer = tfidf(X, y, stopwords_l
 
 Now that we have a set of vectorized training data we can use this data to train a _classifier_ to learn how to classify a specific text based on the vectorized version of the text. Below we have initialized a simple Naive Bayes Classifier and Random Forest Classifier. 
 
-The function should accept a classifier object, a vectorized training set, vectorized test set, and a list of training labels to return separate lists of predictions for the training and the test sets.
+Review the doc-string in the function below to understand the requirements of this function. The function should accept a classifier object, a vectorized training set, vectorized test set, and a list of training labels to return separate lists of predictions for the training and the test sets.
 
 
 ```python
@@ -498,26 +505,6 @@ fig.tight_layout()
 ```
 
 Based on your visual inspection of the above graph, is the monthly open stock price stationary? Explain your answer
-
-
-```python
-"""
-
-Your written answer here
-
-"""
-```
-
-### 4.4) Use the Dickey-Fuller test to identify if `open_monthly_series` is stationary. 
-
-
-```python
-# Relevant import(s) here 
-
-# Your code here
-```
-
-Does this confirm your answer from Question 4.3? Explain why the time series is stationary or not based on the output from the Dickey-Fuller test. What is the null hypothesis, and were you able to reject it?
 
 
 ```python
